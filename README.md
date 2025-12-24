@@ -64,12 +64,24 @@ npm install
 
 ### 3. 配置环境变量
 
-后端的 `.env` 文件已经包含了 Gemini API key，你也可以根据需要修改：
+在 `backend` 目录中创建 `.env` 文件（可以从 `.env.example` 复制）：
+
+```bash
+cd backend
+cp .env.example .env
+```
+
+编辑 `.env` 文件，配置你的 Gemini API key：
 
 ```bash
 GEMINI_API_KEY=your_api_key_here
 PORT=5000
+MOCK_MODE=false
 ```
+
+**注意**：
+- 将 `your_api_key_here` 替换为你的实际 Gemini API key
+- 如果要使用模拟模式进行测试（不调用实际 API），设置 `MOCK_MODE=true`
 
 ### 4. 安装前端依赖
 
@@ -156,6 +168,19 @@ npm start
 cd backend
 npm run dev
 ```
+
+### 测试模式
+
+如果无法访问 Gemini API（例如在受限网络环境中），可以启用模拟模式：
+
+1. 在 `backend/.env` 文件中设置：
+```bash
+MOCK_MODE=true
+```
+
+2. 重启后端服务器
+
+模拟模式会返回预设的响应，用于测试应用的前端功能和用户界面。
 
 ## 生产部署
 

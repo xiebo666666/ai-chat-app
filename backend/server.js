@@ -40,6 +40,25 @@ app.post('/api/chat', async (req, res) => {
       });
     }
 
+    // Mock mode for testing (when API is not accessible)
+    if (process.env.MOCK_MODE === 'true') {
+      const mockResponses = [
+        '你好！我是 AI 助手，由 Google Gemini 提供支持。我可以帮助你回答问题、提供信息、进行对话，并协助你完成各种任务。有什么我可以帮助你的吗？',
+        'Hello! I am an AI assistant powered by Google Gemini. I can help you with answering questions, providing information, having conversations, and assisting with various tasks. How can I help you today?',
+        '我可以帮助你解答问题、提供建议、进行翻译、写作、编程等多种任务。请随时告诉我你需要什么帮助！',
+        'I am here to assist you with information, answer your questions, help with creative tasks, and more. What would you like to know?'
+      ];
+      const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      return res.json({ 
+        success: true,
+        reply: randomResponse 
+      });
+    }
+
     // Get the generative model
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
