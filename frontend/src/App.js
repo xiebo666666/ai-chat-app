@@ -7,6 +7,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
+  const messageIdCounter = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -15,6 +16,11 @@ function App() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const getNextMessageId = () => {
+    messageIdCounter.current += 1;
+    return `msg-${Date.now()}-${messageIdCounter.current}`;
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -29,7 +35,7 @@ function App() {
 
     // Add user message to chat
     const newUserMessage = {
-      id: Date.now(),
+      id: getNextMessageId(),
       text: userMessage,
       sender: 'user',
       timestamp: new Date().toLocaleTimeString()
@@ -55,7 +61,7 @@ function App() {
 
       // Add AI response to chat
       const aiMessage = {
-        id: Date.now() + 1,
+        id: getNextMessageId(),
         text: data.reply,
         sender: 'ai',
         timestamp: new Date().toLocaleTimeString()
@@ -67,7 +73,7 @@ function App() {
       
       // Add error message to chat
       const errorMessage = {
-        id: Date.now() + 1,
+        id: getNextMessageId(),
         text: 'Sorry, I encountered an error. Please try again.',
         sender: 'ai',
         timestamp: new Date().toLocaleTimeString(),

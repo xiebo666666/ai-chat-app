@@ -98,5 +98,7 @@ app.use((req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`API Key configured: ${process.env.GEMINI_API_KEY ? 'Yes' : 'No'}`);
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Mock mode: ${process.env.MOCK_MODE === 'true' ? 'Enabled' : 'Disabled'}`);
+  }
 });
